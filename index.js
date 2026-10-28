@@ -34,5 +34,7 @@ export default function indentString(string, count = 1, options = {}) {
 
 	const regex = includeEmptyLines ? /^/gm : /^(?!\s*$)/gm;
 
-	return string.replace(regex, indent.repeat(count));
+	const indentation = indent.repeat(count);
+
+	return string.replace(regex, () => indentation);
 }

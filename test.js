@@ -67,3 +67,11 @@ test('indent with custom string', t => {
 test('not indent when count is 0', t => {
 	t.is(indentString('foo\nbar\n', 0), 'foo\nbar\n');
 });
+
+test('treat replacement patterns in custom indentation literally', t => {
+	for (const indent of ['$', '$$', '$&', '$`', '$\'', '$1', '$<name>']) {
+		t.is(indentString('foo\nbar', 1, {indent}), `${indent}foo\n${indent}bar`);
+		t.is(indentString('foo\n\nbar\n', 2, {indent}), `${indent}${indent}foo\n\n${indent}${indent}bar\n`);
+		t.is(indentString('foo\n\nbar\n', 1, {indent, includeEmptyLines: true}), `${indent}foo\n${indent}\n${indent}bar\n${indent}`);
+	}
+});
